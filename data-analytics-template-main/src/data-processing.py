@@ -1,0 +1,2 @@
+#Purpose : This file contains all your data cleaning and preparation functions, such as: loading raw data, handling missing values
+#,removing duplicates, normalising columns, feature engineering, saving cleaned data into /data/cleaned/
