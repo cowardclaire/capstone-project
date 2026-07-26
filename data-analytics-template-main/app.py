@@ -1,17 +1,13 @@
-﻿# run.py
+﻿import streamlit as st
 
-"""Entry point for the data analytics capstone project.
+st.set_page_config(page_title="Capstone Project", layout="wide")
 
-Replace this placeholder with your project logic or notebook launching code.
-"""
+st.title("Capstone Project Dashboard")
+st.write("Your Heroku deployment is working, Claire!")
 
-import sys
+st.subheader("Next steps")
+st.write("""
+This is a placeholder Streamlit app.  
+Add your charts, models, and UI components here.
+""")
 
-
-def main() -> None:
-    print("run.py is a placeholder. Add your analysis code here.")
-    print(f"Python version: {sys.version.split()[0]}")
-
-
-if __name__ == "__main__":
-    main()
