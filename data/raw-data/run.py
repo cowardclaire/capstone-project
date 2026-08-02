@@ -189,3 +189,14 @@ def final_checks(df):
     print(df.shape)
 
 final_checks(df)
+
+# ---------------------------------------------------------
+# 11. SAVE CLEANED DATA
+# ---------------------------------------------------------
+
+output_path = os.path.join(os.path.dirname(__file__), "..", "cleaned-data", "cleaned_data.csv")
+
+df.to_csv(output_path, index=False)
+
+print("\n--- CLEANED DATASET EXPORTED TO cleaned-data FOLDER ---")
+print("Saved to:", output_path)
