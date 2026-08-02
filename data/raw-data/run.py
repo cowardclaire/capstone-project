@@ -43,6 +43,7 @@ df = inspect_data("data/raw-data/Zara_sales_EDA.csv")
 #--------------------------------------------------------
 #3. STANDARDISING COLUMN NAMES
 #--------------------------------------------------------   
+#noticed that the column names varied a lower and upper case, as well as spaces
 
 def standardise_column_names(df):
     df.columns = (
@@ -147,6 +148,28 @@ for col, rows in outliers.items():
 
 print(df['price'].describe().round(2)) #IQR method flagged outliers in price but after reviewing the price situation, I have decided to keep the outliers as they are valid data points and removing them would result in loss of valuable information.
 
+#---------------------------------------------------------
+#7. FEATURE ENGINEERING
+#---------------------------------------------------------
+#adding a new feature which attributes whether an item is a low, average, or high performer based on median sales.
+
+def engineer_features(df):
+
+    # 1. Sales performance buckets (low, average, high)
+    if "sales_volume" in df.columns:
+        q1 = df["sales_volume"].quantile(0.33)
+        q2 = df["sales_volume"].quantile(0.66)
+
+        def performance_bucket(x):
+            if x <= q1:
+                return "low"
+            elif x <= q2:
+                return "average"
+            else:
+                return "high"
+
+        df["sales_performance_bucket"] = df["sales_volume"].apply(performance_bucket)
+
 # ---------------------------------------------------------
 # 7. ENCODE CATEGORICAL VARIABLES
 # ---------------------------------------------------------
@@ -191,7 +214,7 @@ def final_checks(df):
 final_checks(df)
 
 # ---------------------------------------------------------
-# 11. SAVE CLEANED DATA
+# 10. SAVE CLEANED DATA
 # ---------------------------------------------------------
 
 output_path = os.path.join(os.path.dirname(__file__), "..", "cleaned-data", "cleaned_data.csv")
