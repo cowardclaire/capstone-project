@@ -185,6 +185,13 @@ def generate_all_visuals(df):
     plot_price_distribution(df)
     plot_product_category(df)
     plot_promotion_vs_sales(df)
+    plot_correlation_heatmap(df)
+    plot_sales_volume_by_category(df)
+    plot_sales_volume_by_position(df)
+    plot_promotion_effectiveness(df)
+    plot_price_vs_sales(df)
+    plot_outlier_boxplots(df)
+    plot_pairplot(df)
 
 # ---------------------------------------------------------
 # RUN WHEN EXECUTED DIRECTLY
