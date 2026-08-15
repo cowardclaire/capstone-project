@@ -23,6 +23,26 @@ def save_plot(fig, filename):
     fig.savefig(full_path, dpi=300, bbox_inches='tight')
     plt.close(fig)
 
+
+# ---------------------------------------------------------
+# REBUILD PRODUCT POSITION (because OHE removed it)
+# ---------------------------------------------------------
+
+def rebuild_product_position(df):
+    position_cols = [col for col in df.columns if col.startswith("product_position_")]
+
+    if len(position_cols) == 0:
+        print("No encoded product_position columns found.")
+        return df
+
+    df['product_position'] = (
+        df[position_cols]
+        .idxmax(axis=1)
+        .str.replace("product_position_", "")
+    )
+
+    return df
+
 # ---------------------------------------------------------
 # INDIVIDUAL PLOT FUNCTIONS
 # ---------------------------------------------------------
@@ -84,8 +104,14 @@ def plot_promotion_vs_sales(df):
 #---------------------------------------------------------
 
 def plot_correlation_heatmap(df):
+    # Select only numeric columns
+    numeric_df = df.select_dtypes(include=['int64', 'float64'])
+
+    # Round correlation values to 2 decimal places
+    corr = numeric_df.corr().round(2)
+
     fig, ax = plt.subplots(figsize=(12,8))
-    sns.heatmap(df.corr(), annot=True, cmap='Blues', ax=ax)
+    sns.heatmap(corr, annot=True, cmap='Blues', ax=ax, fmt=".2f")
     ax.set_title("Correlation Heatmap")
 
     save_plot(fig, "correlation_heatmap.png")
@@ -181,10 +207,10 @@ def plot_pairplot(df):
 # ---------------------------------------------------------
 
 def generate_all_visuals(df):
-    plot_sales_volume_distribution(df)
     plot_price_distribution(df)
     plot_product_category(df)
     plot_promotion_vs_sales(df)
+    plot_sales_volume_distribution(df)
     plot_correlation_heatmap(df)
     plot_sales_volume_by_category(df)
     plot_sales_volume_by_position(df)
@@ -200,6 +226,8 @@ def generate_all_visuals(df):
 if __name__ == "__main__":
     cleaned_path = os.path.join(os.path.dirname(__file__), "..", "data", "cleaned-data", "cleaned_data.csv")
     df = pd.read_csv(cleaned_path)
+
+    df = rebuild_product_position(df)
 
     generate_all_visuals(df)
     print("All visuals saved to /visuals folder.")

@@ -41,7 +41,7 @@ def inspect_data(file_path):
 
     return df
 
-df = inspect_data("data/raw-data/Zara_sales_EDA.csv")
+df = inspect_data("data/raw-data/raw-data.csv")
 
 #--------------------------------------------------------
 #3. STANDARDISING COLUMN NAMES
@@ -189,7 +189,7 @@ def encode_categorical_features(df):
 
     # 2. One-hot encode product_position
     if "product_position" in df.columns:
-        df = pd.get_dummies(df, columns=["product_position"], drop_first=True)
+        df = pd.get_dummies(df, columns=["product_position"], drop_first=False)
 
     return df
 
@@ -220,7 +220,7 @@ final_checks(df)
 # 10. SAVE CLEANED DATA
 # ---------------------------------------------------------
 
-output_path = os.path.join(os.path.dirname(__file__), "..", "cleaned-data", "cleaned_data.csv")
+output_path = os.path.join(os.path.dirname(__file__), "..", "data", "cleaned-data", "cleaned_data.csv")
 
 df.to_csv(output_path, index=False)
 
