@@ -16,13 +16,12 @@ import numpy as np
 # ---------------------------------------------------------
 
 def save_plot(fig, filename):
-    visuals_path = os.path.join(os.path.dirname(__file__), "..", "visuals")
+    visuals_path = os.path.join(os.path.dirname(__file__), "..", "visuals", "eda")
     os.makedirs(visuals_path, exist_ok=True)
 
     full_path = os.path.join(visuals_path, filename)
     fig.savefig(full_path, dpi=300, bbox_inches='tight')
     plt.close(fig)
-
 
 # ---------------------------------------------------------
 # REBUILD PRODUCT POSITION (because OHE removed it)
@@ -198,7 +197,9 @@ def plot_pairplot(df):
     fig.fig.suptitle("Pairplot of Key Variables", y=1.02)
 
     # pairplot saving trick
-    fig.savefig(os.path.join(os.path.dirname(__file__), "..", "visuals", "pairplot.png"), dpi=300, bbox_inches='tight')
+    pairplot_path = os.path.join(os.path.dirname(__file__), "..", "visuals", "eda", "pairplot.png")
+    fig.savefig(pairplot_path, dpi=300, bbox_inches='tight')
+
     plt.close()
 
 
@@ -230,4 +231,4 @@ if __name__ == "__main__":
     df = rebuild_product_position(df)
 
     generate_all_visuals(df)
-    print("All visuals saved to /visuals folder.")
+    print("All EDA visuals saved to /visuals/eda folder.")

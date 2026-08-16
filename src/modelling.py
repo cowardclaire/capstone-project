@@ -1,7 +1,7 @@
 #Purpose :This file contains all your machine learning or statistical modelling code, such as: linear regression, clustering (KMeans),
 #forecasting models, evaluation metrics
 
-#trying to build a model to predict sales volume based on the cleaned data
+#trying to build a model to predict sales volume based on the cleaned data and what features are the biggest drivers of sales volume
 
 import os
 import pandas as pd
@@ -14,6 +14,13 @@ from xgboost import XGBRegressor
 
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+#------------------------------------------------------------
+# Create model visuals directory
+#------------------------------------------------------------
+
+MODEL_VISUALS_DIR = os.path.join(BASE_DIR, "..", "visuals", "model")
+os.makedirs(MODEL_VISUALS_DIR, exist_ok=True)
 
 
 # ------------------------------------------------------------
@@ -122,14 +129,14 @@ sns.barplot(
 plt.title("Feature Importances - XGBoost Sales Volume Model")
 plt.tight_layout()
 
-VISUALS_PATH = os.path.join(BASE_DIR, "..", "visuals", "xgboost_feature_importance.png")
+VISUALS_PATH = os.path.join(MODEL_VISUALS_DIR, "xgboost_feature_importance.png")
 plt.savefig(VISUALS_PATH)
 plt.close()
 
 print(f"Feature importance plot saved to: {VISUALS_PATH}")
 
 
-#reviewing the feature importance plot, where promotion is dominating the chart i now want to drop promotion so i can see the other features and their importance.
+#creating a second feature importance plot, as promotion is dominating the chart and i now want to drop promotion so i can see the other features and their importance.
 
 importance_df_no_promo = importance_df[importance_df['feature'] != 'promotion']
 
@@ -145,8 +152,43 @@ sns.barplot(
 plt.title("Feature Importances (Excluding Promotion)")
 plt.tight_layout()
 
-path = os.path.join(BASE_DIR, "..", "visuals", "feature_importance_no_promo.png")
+path = os.path.join(MODEL_VISUALS_DIR, "feature_importance_no_promo.png")
 plt.savefig(path)
 plt.close()
 
 print(f"Saved: {path}")
+
+#creating a visual to show the predicted vs actual sales volume, to see how well the model is performing.
+
+# Predicted vs Actual plot
+plt.figure(figsize=(8, 6))
+plt.scatter(y_test, y_pred, alpha=0.5)
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--')
+plt.xlabel("Actual Sales Volume")
+plt.ylabel("Predicted Sales Volume")
+plt.title("Predicted vs Actual Sales Volume")
+plt.tight_layout()
+
+PRED_ACTUAL_PATH = os.path.join(MODEL_VISUALS_DIR, "predicted_vs_actual.png")
+plt.savefig(PRED_ACTUAL_PATH)
+plt.close()
+
+print(f"Predicted vs Actual plot saved to: {PRED_ACTUAL_PATH}")
+
+# creating a residuals plot to visualize the errors of the model's predictions.
+
+residuals = y_test - y_pred
+
+plt.figure(figsize=(8, 6))
+plt.scatter(y_pred, residuals, alpha=0.5)
+plt.axhline(0, color='red', linestyle='--')
+plt.xlabel("Predicted Sales Volume")
+plt.ylabel("Residuals (Actual - Predicted)")
+plt.title("Residuals Plot")
+plt.tight_layout()
+
+RESIDUALS_PATH = os.path.join(MODEL_VISUALS_DIR, "residuals_plot.png")
+plt.savefig(RESIDUALS_PATH)
+plt.close()
+
+print(f"Residuals plot saved to: {RESIDUALS_PATH}")
