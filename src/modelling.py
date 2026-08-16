@@ -1,6 +1,7 @@
 #Purpose :This file contains all your machine learning or statistical modelling code, such as: linear regression, clustering (KMeans),
 #forecasting models, evaluation metrics
 
+#trying to build a model to predict sales volume based on the cleaned data
 
 import os
 import pandas as pd
@@ -26,7 +27,7 @@ df = pd.read_csv(DATA_PATH)
 
 
 # ------------------------------------------------------------
-# 2. Remove all text/object columns (XGBoost cannot use them)
+# 2. Remove all text/object columns (XGBoost can't use them)
 # ------------------------------------------------------------
 
 text_cols = df.select_dtypes(include=['object', 'string']).columns.tolist()
@@ -34,7 +35,7 @@ df = df.drop(columns=text_cols)
 
 
 # ------------------------------------------------------------
-# 3. Encode remaining categorical columns
+# 3. Encoding remaining categorical columns
 # ------------------------------------------------------------
 
 categorical_cols = []
@@ -47,7 +48,7 @@ df = pd.get_dummies(df, columns=categorical_cols, drop_first=True)
 
 
 # ------------------------------------------------------------
-# 4. Define features and target
+# 4. Defining features and target
 # ------------------------------------------------------------
 
 TARGET_COL = 'sales_volume'
@@ -118,7 +119,7 @@ sns.barplot(
     legend=False,
     palette='viridis'
 )
-plt.title("Top 15 Feature Importances - XGBoost Sales Volume Model")
+plt.title("Feature Importances - XGBoost Sales Volume Model")
 plt.tight_layout()
 
 VISUALS_PATH = os.path.join(BASE_DIR, "..", "visuals", "xgboost_feature_importance.png")
@@ -126,3 +127,26 @@ plt.savefig(VISUALS_PATH)
 plt.close()
 
 print(f"Feature importance plot saved to: {VISUALS_PATH}")
+
+
+#reviewing the feature importance plot, where promotion is dominating the chart i now want to drop promotion so i can see the other features and their importance.
+
+importance_df_no_promo = importance_df[importance_df['feature'] != 'promotion']
+
+plt.figure(figsize=(10, 6))
+sns.barplot(
+    data=importance_df_no_promo,
+    x='importance',
+    y='feature',
+    hue='feature',
+    legend=False,
+    palette='viridis'
+)
+plt.title("Feature Importances (Excluding Promotion)")
+plt.tight_layout()
+
+path = os.path.join(BASE_DIR, "..", "visuals", "feature_importance_no_promo.png")
+plt.savefig(path)
+plt.close()
+
+print(f"Saved: {path}")
