@@ -34,6 +34,10 @@ median_table['percentage_uplift'] = (
 median_table = median_table.round(0)
 print(median_table.to_string())
 
+#---------------------------------------------------------
+# 3. Create a bar plot to visualize the median sales volume for each product position and promotion status
+#---------------------------------------------------------
+
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -52,7 +56,9 @@ plt.xlabel("Product Position")
 plt.ylabel("Sales Volume")
 plt.legend(title="Promotion (0 = No, 1 = Yes)")
 plt.tight_layout()
-plt.show()
+plt.savefig("visuals/sales_volume_by_position_and_promotion.png")
+
+plt.close()
 
 
 #From the boxplot we can see that promotions significantly increase sales volume across all product positions, with uplift of approximately 535–542 units. The effect of promotion is substantially larger than the effect of product placement, and the uplift is consistent across Aisle, End‑cap, and Front of Store. Product position influences sales variability, but not the promotional uplift
