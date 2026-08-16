@@ -2,7 +2,17 @@
 #wanting to delve into further and compare promo uplift across different product positions, we can create a new visualization that shows the average sales volume for each combination of product position and promotion status. This will help us understand how the effectiveness of promotions varies depending on where the product is positioned.
 #used AI to help me calculate the below
 
+import os
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Base directory of the project
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Create uplift visuals directory
+UPLIFT_VISUALS_DIR = os.path.join(BASE_DIR, "..", "visuals", "uplift")
+os.makedirs(UPLIFT_VISUALS_DIR, exist_ok=True)
 
 # Loading cleaned dataset
 df = pd.read_csv("data/cleaned-data/cleaned_data.csv")  
@@ -56,7 +66,9 @@ plt.xlabel("Product Position")
 plt.ylabel("Sales Volume")
 plt.legend(title="Promotion (0 = No, 1 = Yes)")
 plt.tight_layout()
-plt.savefig("visuals/sales_volume_by_position_and_promotion.png")
+SAVE_PATH = os.path.join(UPLIFT_VISUALS_DIR, "sales_volume_by_position_and_promotion.png")
+plt.savefig(SAVE_PATH, dpi=300, bbox_inches='tight')
+
 
 plt.close()
 

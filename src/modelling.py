@@ -15,13 +15,6 @@ from xgboost import XGBRegressor
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-#------------------------------------------------------------
-# Create model visuals directory
-#------------------------------------------------------------
-
-MODEL_VISUALS_DIR = os.path.join(BASE_DIR, "..", "visuals", "model")
-os.makedirs(MODEL_VISUALS_DIR, exist_ok=True)
-
 
 # ------------------------------------------------------------
 # 1. Load cleaned data
@@ -30,8 +23,11 @@ os.makedirs(MODEL_VISUALS_DIR, exist_ok=True)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_PATH = os.path.join(BASE_DIR, "..", "data", "cleaned-data", "cleaned_data.csv")
 
-df = pd.read_csv(DATA_PATH)
+# Create model visuals directory (MUST come AFTER BASE_DIR)
+MODEL_VISUALS_DIR = os.path.join(BASE_DIR, "..", "visuals", "model")
+os.makedirs(MODEL_VISUALS_DIR, exist_ok=True)
 
+df = pd.read_csv(DATA_PATH)
 
 # ------------------------------------------------------------
 # 2. Remove all text/object columns (XGBoost can't use them)
