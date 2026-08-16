@@ -201,6 +201,18 @@ df = encode_categorical_features(df)
 print("\n--- AFTER ENCODING CATEGORICAL VARIABLES ---")
 print(df.head())
 
+# Identify the one-hot encoded columns
+position_cols = [col for col in df.columns if col.startswith("product_position_")]
+
+# Reconstruct the original product_position column
+df['product_position'] = (
+    df[position_cols]
+      .idxmax(axis=1)                     # get the column name with value 1
+      .str.replace("product_position_", "")  # remove prefix
+)
+
+#keeping the original product_position column for analysis and visualisation purposes, as it is easier to interpret than the one-hot encoded columns.
+
 # ---------------------------------------------------------
 # 9. FINAL VALIDATION CHECKS
 # ---------------------------------------------------------
