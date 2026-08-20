@@ -1,9 +1,6 @@
-#Purpose : This file contains reusable Plotly, Matplotlib, or Seaborn chart functions, such as: time-series charts, bar charts,
-#scatter plots, box plots, customer segmentation visuals
-
-#--------------------------------------------------------
-#IMPORTING LIBRARIES FOR CLEANING AND VISUALIZING DATA
-#--------------------------------------------------------
+# --------------------------------------------------------
+# VISUALISATIONS MODULE (MODULAR VERSION)
+# --------------------------------------------------------
 
 import os
 import matplotlib.pyplot as plt
@@ -11,9 +8,11 @@ import seaborn as sns
 import pandas as pd
 import numpy as np
 
-# ---------------------------------------------------------
+sns.set(style="whitegrid")
+
+# --------------------------------------------------------
 # SAVE FUNCTION
-# ---------------------------------------------------------
+# --------------------------------------------------------
 
 def save_plot(fig, filename):
     visuals_path = os.path.join(os.path.dirname(__file__), "..", "visuals", "eda")
@@ -22,10 +21,11 @@ def save_plot(fig, filename):
     full_path = os.path.join(visuals_path, filename)
     fig.savefig(full_path, dpi=300, bbox_inches='tight')
     plt.close(fig)
+    print(f"Saved: {os.path.normpath(full_path)}")
 
-# ---------------------------------------------------------
-# REBUILD PRODUCT POSITION (because OHE removed it)
-# ---------------------------------------------------------
+# --------------------------------------------------------
+# REBUILD PRODUCT POSITION (for visuals)
+# --------------------------------------------------------
 
 def rebuild_product_position(df):
     position_cols = [col for col in df.columns if col.startswith("product_position_")]
@@ -42,13 +42,9 @@ def rebuild_product_position(df):
 
     return df
 
-# ---------------------------------------------------------
-# INDIVIDUAL PLOT FUNCTIONS
-# ---------------------------------------------------------
-
-#---------------------------------------------------------
-#1. PLOT SALES VOLUME DISTRIBUTION  
-#---------------------------------------------------------
+# --------------------------------------------------------
+# 1. SALES VOLUME DISTRIBUTION
+# --------------------------------------------------------
 
 def plot_sales_volume_distribution(df):
     fig, ax = plt.subplots(figsize=(10,6))
@@ -59,9 +55,9 @@ def plot_sales_volume_distribution(df):
 
     save_plot(fig, "sales_volume_distribution.png")
 
-#---------------------------------------------------------
-#2. PLOT PRICE DISTRIBUTION
-#---------------------------------------------------------
+# --------------------------------------------------------
+# 2. PRICE DISTRIBUTION + BOXPLOT
+# --------------------------------------------------------
 
 def plot_price_distribution(df):
     fig, ax = plt.subplots(1, 2, figsize=(14,6))
@@ -73,9 +69,9 @@ def plot_price_distribution(df):
 
     save_plot(fig, "price_distribution.png")
 
-#---------------------------------------------------------
-#3. PLOT PRODUCT CATEGORY DISTRIBUTION
-#---------------------------------------------------------
+# --------------------------------------------------------
+# 3. PRODUCT CATEGORY DISTRIBUTION
+# --------------------------------------------------------
 
 def plot_product_category(df):
     fig, ax = plt.subplots(figsize=(12,6))
@@ -85,28 +81,26 @@ def plot_product_category(df):
 
     save_plot(fig, "product_category_distribution.png")
 
-#---------------------------------------------------------
-#4. PLOT PROMOTION VS SALES VOLUME
-#---------------------------------------------------------
+# --------------------------------------------------------
+# 4. PROMOTION VS SALES VOLUME
+# --------------------------------------------------------
 
 def plot_promotion_vs_sales(df):
     fig, ax = plt.subplots(figsize=(10,6))
-    sns.boxplot(data=df, x='promotion', y='sales_volume', hue='promotion', palette='coolwarm', legend=False, ax=ax)
+    sns.boxplot(data=df, x='promotion', y='sales_volume', hue='promotion',
+                palette='coolwarm', legend=False, ax=ax)
     plt.title("Sales Volume by Promotion")
     plt.xlabel("Promotion (0 = No, 1 = Yes)")
     plt.ylabel("Sales Volume")
 
     save_plot(fig, "promotion_vs_sales_volume.png")
 
-#---------------------------------------------------------
-#5.CORRELATION HEATMAP  
-#---------------------------------------------------------
+# --------------------------------------------------------
+# 5. CORRELATION HEATMAP
+# --------------------------------------------------------
 
 def plot_correlation_heatmap(df):
-    # Select only numeric columns
     numeric_df = df.select_dtypes(include=['int64', 'float64'])
-
-    # Round correlation values to 2 decimal places
     corr = numeric_df.corr().round(2)
 
     fig, ax = plt.subplots(figsize=(12,8))
@@ -115,14 +109,15 @@ def plot_correlation_heatmap(df):
 
     save_plot(fig, "correlation_heatmap.png")
 
-#---------------------------------------------------------
-#6. SALES VOLUME BY CATEGORY
-#---------------------------------------------------------
+# --------------------------------------------------------
+# 6. SALES VOLUME BY CATEGORY
+# --------------------------------------------------------
 
 def plot_sales_volume_by_category(df):
     fig, ax = plt.subplots(figsize=(12,6))
     category_means = df.groupby('terms')['sales_volume'].mean().sort_values()
-    sns.barplot(x=category_means.index, y=category_means.values, palette='viridis', ax=ax)
+    sns.barplot(x=category_means.index, y=category_means.values,
+                palette='viridis', ax=ax)
     ax.set_title("Average Sales Volume by Product Category")
     ax.set_xlabel("Product Category")
     ax.set_ylabel("Average Sales Volume")
@@ -130,13 +125,14 @@ def plot_sales_volume_by_category(df):
 
     save_plot(fig, "sales_volume_by_category.png")
 
-#---------------------------------------------------------
-#7. SALES VOLUME BY PRODUCT POSITION
-#---------------------------------------------------------
+# --------------------------------------------------------
+# 7. SALES VOLUME BY PRODUCT POSITION
+# --------------------------------------------------------
 
 def plot_sales_volume_by_position(df):
     fig, ax = plt.subplots(figsize=(12,6))
-    sns.boxplot(data=df, x='product_position', y='sales_volume', palette='coolwarm', ax=ax)
+    sns.boxplot(data=df, x='product_position', y='sales_volume',
+                palette='coolwarm', ax=ax)
     ax.set_title("Sales Volume by Product Position")
     ax.set_xlabel("Product Position")
     ax.set_ylabel("Sales Volume")
@@ -144,37 +140,39 @@ def plot_sales_volume_by_position(df):
 
     save_plot(fig, "sales_volume_by_position.png")
 
-#---------------------------------------------------------
-#8. PROMOTION EFFECTIVENESS (AVERAGE SALES)
-#---------------------------------------------------------
+# --------------------------------------------------------
+# 8. PROMOTION EFFECTIVENESS
+# --------------------------------------------------------
 
 def plot_promotion_effectiveness(df):
     fig, ax = plt.subplots(figsize=(8,6))
     promo_means = df.groupby('promotion')['sales_volume'].mean()
-    sns.barplot(x=promo_means.index, y=promo_means.values, palette='coolwarm', ax=ax)
+    sns.barplot(x=promo_means.index, y=promo_means.values,
+                palette='coolwarm', ax=ax)
     ax.set_title("Promotion Effectiveness (Mean Sales Volume)")
     ax.set_xlabel("Promotion (0 = No, 1 = Yes)")
     ax.set_ylabel("Average Sales Volume")
 
     save_plot(fig, "promotion_effectiveness.png")
 
-#---------------------------------------------------------
-#9. PRICE vs. SALES VOLUME
-#---------------------------------------------------------
+# --------------------------------------------------------
+# 9. PRICE VS SALES VOLUME
+# --------------------------------------------------------
 
 def plot_price_vs_sales(df):
     fig, ax = plt.subplots(figsize=(10,6))
     sns.scatterplot(data=df, x='price', y='sales_volume', color='purple', ax=ax)
-    sns.regplot(data=df, x='price', y='sales_volume', scatter=False, color='black', ax=ax)
+    sns.regplot(data=df, x='price', y='sales_volume',
+                scatter=False, color='black', ax=ax)
     ax.set_title("Price vs Sales Volume")
     ax.set_xlabel("Price")
     ax.set_ylabel("Sales Volume")
 
     save_plot(fig, "price_vs_sales_volume.png")
 
-#---------------------------------------------------------
-#10. OUTLIER BOXPLOTS
-#---------------------------------------------------------
+# --------------------------------------------------------
+# 10. OUTLIER BOXPLOTS
+# --------------------------------------------------------
 
 def plot_outlier_boxplots(df):
     fig, ax = plt.subplots(1, 2, figsize=(14,6))
@@ -187,27 +185,25 @@ def plot_outlier_boxplots(df):
 
     save_plot(fig, "outlier_boxplots.png")
 
-#---------------------------------------------------------
-#11. PAIRPLOT OF KEY VARIABLES
-#---------------------------------------------------------
+# --------------------------------------------------------
+# 11. PAIRPLOT
+# --------------------------------------------------------
 
 def plot_pairplot(df):
     cols = ['price', 'sales_volume', 'promotion']
     fig = sns.pairplot(df[cols], diag_kind='kde', corner=True)
     fig.fig.suptitle("Pairplot of Key Variables", y=1.02)
 
-    # pairplot saving trick
-    pairplot_path = os.path.join(os.path.dirname(__file__), "..", "visuals", "eda", "pairplot.png")
-    fig.savefig(pairplot_path, dpi=300, bbox_inches='tight')
+    save_plot(fig.fig, "pairplot.png")
 
-    plt.close()
-
-
-# ---------------------------------------------------------
-# GENERATE ALL VISUALS
-# ---------------------------------------------------------
+# --------------------------------------------------------
+# 12. GENERATE ALL VISUALS (MAIN FUNCTION)
+# --------------------------------------------------------
 
 def generate_all_visuals(df):
+
+    df = rebuild_product_position(df)
+
     plot_price_distribution(df)
     plot_product_category(df)
     plot_promotion_vs_sales(df)
@@ -220,15 +216,13 @@ def generate_all_visuals(df):
     plot_outlier_boxplots(df)
     plot_pairplot(df)
 
-# ---------------------------------------------------------
-# RUN WHEN EXECUTED DIRECTLY
-# ---------------------------------------------------------
+    print("\n--- ALL EDA VISUALS SAVED TO /visuals/eda ---")
+
 
 if __name__ == "__main__":
-    cleaned_path = os.path.join(os.path.dirname(__file__), "..", "data", "cleaned-data", "cleaned_data.csv")
-    df = pd.read_csv(cleaned_path)
-
-    df = rebuild_product_position(df)
-
-    generate_all_visuals(df)
-    print("All EDA visuals saved to /visuals/eda folder.")
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    data_path = os.path.join(
+        base_dir, "..", "data", "cleaned-data", "cleaned_data.csv"
+    )
+    data = pd.read_csv(data_path)
+    generate_all_visuals(data)
