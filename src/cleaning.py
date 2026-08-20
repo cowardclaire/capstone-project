@@ -147,7 +147,7 @@ def final_checks(df):
 
 def clean_data():
     # Load raw data
-    file_path = os.path.join(os.path.dirname(__file__), "..", "data", "raw-data", "raw_data.csv")
+    file_path = os.path.join(os.path.dirname(__file__), "..", "data", "raw-data", "raw-data.csv")
     df = inspect_data(file_path)
 
     # Standardise column names
@@ -187,3 +187,7 @@ def clean_data():
     print("Saved to:", output_path)
 
     return df
+
+
+if __name__ == "__main__":
+    clean_data()
