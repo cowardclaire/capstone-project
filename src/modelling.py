@@ -35,6 +35,10 @@ def save_plot(fig, filename):
 
 def train_models(df):
 
+    target_col = "sales_volume"
+    if target_col not in df.columns:
+        raise ValueError(f"Required target column '{target_col}' was not found.")
+
     # ------------------------------------------------------------
     # 1. Remove text/object columns (XGBoost cannot use them)
     # ------------------------------------------------------------
@@ -46,19 +50,18 @@ def train_models(df):
     # ------------------------------------------------------------
     categorical_cols = []
 
-    if 'category' in df.columns:
-        categorical_cols.append('category')
+    if 'product_category' in df.columns:
+        categorical_cols.append('product_category')
 
     df = pd.get_dummies(df, columns=categorical_cols, drop_first=True)
 
     # ------------------------------------------------------------
     # 3. Define features and target
     # ------------------------------------------------------------
-    TARGET_COL = 'sales_volume'
-    feature_cols = [col for col in df.columns if col != TARGET_COL]
+    feature_cols = [col for col in df.columns if col != target_col]
 
     X = df[feature_cols]
-    y = df[TARGET_COL]
+    y = df[target_col]
 
     # ------------------------------------------------------------
     # 4. Train/test split
@@ -188,9 +191,9 @@ def train_models(df):
     joblib.dump(model, os.path.join(model_path, "xgboost_model.pkl"))
 
     print("\n--- XGBoost modelling complete ---")
-    print("Metrics saved to /data/model-metrics/")
-    print("Model saved to /data/model/")
-    print("Visuals saved to /visuals/model/")
+    print("Metrics saved to data/model-metrics/xgboost_metrics.csv")
+    print("Model saved to data/model/xgboost_model.pkl")
+    print("Visuals saved to visuals/model/")
 
     return model
 
