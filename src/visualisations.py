@@ -197,7 +197,25 @@ def plot_pairplot(df):
     save_plot(fig.fig, "pairplot.png")
 
 # --------------------------------------------------------
-# 12. GENERATE ALL VISUALS (MAIN FUNCTION)
+# 12. PRICE BY CATEGORY
+# --------------------------------------------------------
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+def plot_price_by_category(df):
+    plt.figure(figsize=(12,6))
+    sns.boxplot(data=df, x='terms', y='price', palette='viridis')
+    plt.title("Price by Product Category")
+    plt.xlabel("Product Category")
+    plt.ylabel("Price")
+    plt.xticks(rotation=45)
+
+    save_plot(plt.gcf(), "price_by_category.png")
+
+
+# --------------------------------------------------------
+# 13. GENERATE ALL VISUALS (MAIN FUNCTION)
 # --------------------------------------------------------
 
 def generate_all_visuals(df):
@@ -215,7 +233,7 @@ def generate_all_visuals(df):
     plot_price_vs_sales(df)
     plot_outlier_boxplots(df)
     plot_pairplot(df)
-
+    plot_price_by_category(df)  
     print("\n--- ALL EDA VISUALS SAVED TO /visuals/eda ---")
 
 
