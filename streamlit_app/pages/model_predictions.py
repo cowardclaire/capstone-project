@@ -5,7 +5,7 @@ import joblib
 st.title("Sales Volume Prediction")
 
 # Load trained model
-model = joblib.load("../data/model/xgboost_model.pkl")
+model = joblib.load("../../data/model/xgboost_model.pkl")
 
 st.write("Use the inputs below to see the predicted sales volume.")
 

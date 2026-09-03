@@ -8,3 +8,4 @@ Welcome to the Retail Sales Dashboard.
 Using this app, you can explore product performance, pricing behaviour, as well as promotional impact. It also predicts sales volume using an XGBoost model.
 """)
 
+
