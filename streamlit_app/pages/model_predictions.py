@@ -14,14 +14,15 @@ st.write("Use the inputs below to see the predicted sales volume.")
 
 # User inputs
 price = st.slider("Price (£)", 1, 150, 30)
-promotion = st.selectbox("Promotion", [0, 1])
+promotion = st.selectbox("Promotion", ["Yes", "No"])
+promotion_binary = 1 if promotion == "Yes" else 0
 position = st.selectbox("Product Position", ["Aisle", "End-cap", "Front of Store"])
-category = st.selectbox("Product Category", ["t-shirts", "shoes", "jeans", "jackets", "sweaters"])
+category = st.selectbox("Product Category", ["T-Shirts", "Shoes", "Jeans", "Jackets", "Sweaters"])
 
 # Build input dataframe
 input_df = pd.DataFrame({
     "price": [price],
-    "promotion": [promotion],
+    "promotion": [promotion_binary],
     "store_position": [position],
     "product_category": [category]
 })
