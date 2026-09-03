@@ -1,11 +1,14 @@
 import streamlit as st
 import pandas as pd
 import joblib
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).resolve().parents[2]
 
 st.title("Sales Volume Prediction")
 
 # Load trained model
-model = joblib.load("../../data/model/xgboost_model.pkl")
+model = joblib.load(ROOT_DIR / "data" / "model" / "xgboost_model.pkl")
 
 st.write("Use the inputs below to see the predicted sales volume.")
 
