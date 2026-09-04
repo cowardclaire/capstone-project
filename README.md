@@ -21,24 +21,19 @@ This project aims to help retailers understand what drives product sales, the im
 *used copilot to create below project structure tree
 
 capstone-project/
-│
 ├── data/                     # Raw and cleaned datasets
-│
 ├── visuals/                  # EDA charts and plots
 │   └── eda/
-│
 ├── src/                      # Model training scripts
-│
 ├── jupyter_notebooks/        # Full EDA + modelling notebook
-│
 ├── streamlit_app/            # Dashboard application
 │   ├── Main_Page.py          # Home page
 │   └── Pages/
 │       ├── EDA.py
 │       ├── Model_Predictions.py
 │       └── Insights_and_Recommendations.py
-│
 └── README.md                 # Project documentation
+
 
 ## How to run the Dashboard
 ### Create and activate the virtual environment (if not already live) :
