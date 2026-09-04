@@ -78,3 +78,7 @@ After creating the model, I consulted AI to help me with saving the model so tha
 •	Position in store didn't impact volumes until on promotion
 •	The model predicts sales volume with strong accuracy
 
+## Conclusion
+
+Overall this project has looked at retail sale volume, finding out what really drives performance. I explored the different product attributes, and found that price was the biggest driver, shown through the biggest correlation between sales volume and promotion. After exploring the dataset through visuals, I created a model that would forecast sales based on attributes such as if on promotion, what category the product fell into, store position and price. Then I created a simple Streamlit dashboard that allowed users to toggle between these features before forecasting the units they would sell. 
+Through this project I worked through the full data analytics cycle from cleaning the raw data, through to EDA and insights, to creating a model as well as a Streamlit dashboard. It shows how data can help with commercial decisions backed by data.
