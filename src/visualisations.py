@@ -200,9 +200,6 @@ def plot_pairplot(df):
 # 12. PRICE BY CATEGORY
 # --------------------------------------------------------
 
-import matplotlib.pyplot as plt
-import seaborn as sns
-
 def plot_price_by_category(df):
     plt.figure(figsize=(12,6))
     sns.boxplot(data=df, x='terms', y='price', palette='viridis')
@@ -212,7 +209,6 @@ def plot_price_by_category(df):
     plt.xticks(rotation=45)
 
     save_plot(plt.gcf(), "price_by_category.png")
-
 
 # --------------------------------------------------------
 # 13. GENERATE ALL VISUALS (MAIN FUNCTION)

@@ -70,3 +70,11 @@ This model uses feature engineering such as OHE (one hot encoding), as well as t
 
 After creating the model, I consulted AI to help me with saving the model so that it was reusable. It advised and guided me to save as a pkl file which allows me to load the model inside my Streamlit app and make predictions instantly. I didn’t want to have to train and test every time the dashboard runs.
 
+## Key Findings
+
+•	Price has a strong impact on sales volume
+•	Promotions significantly increase demand
+•	Categories sell averagely similar volumes
+•	Position in store didn't impact volumes until on promotion
+•	The model predicts sales volume with strong accuracy
+
