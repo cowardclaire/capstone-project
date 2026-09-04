@@ -34,7 +34,6 @@ capstone-project/
 │       └── Insights_and_Recommendations.py
 └── README.md                 # Project documentation
 
-
 ## How to run the Dashboard
 ### Create and activate the virtual environment (if not already live) :
 - python -m venv .venv
@@ -60,3 +59,14 @@ Main Page – introducing the dashboard
 EDA – shows my key visuals 
 Insights & Predictions – explains my findings of which attributes have the biggest impact on sales, and how businesses could use the model to improve their sales and stock position
 Model Predictions – allows users to toggle with pricing, promotion, store position, and product categories before predicting sales volume
+
+## Model Overview
+
+I consulted AI to help me choose which model would be best for my dataset and what I set out to achieve with this project. 
+
+It guided me to use the XGBoost Regressor as it captures patterns by making lots of decision trees and combines them to make predictions. Instead of forcing a straight line through my data like linear regression would, XGBoost builds flexible rules that suits retails varying behaviours.
+
+This model uses feature engineering such as OHE (one hot encoding), as well as train/test split	, and used RMSE and R² to evaluate.
+
+After creating the model, I consulted AI to help me with saving the model so that it was reusable. It advised and guided me to save as a pkl file which allows me to load the model inside my Streamlit app and make predictions instantly. I didn’t want to have to train and test every time the dashboard runs.
+
