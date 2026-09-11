@@ -14,8 +14,58 @@ The dashboard allows users to:
 
 ## Business Model
 
-This project aims to help retailers understand what drives product sales, the impact of pricing and promotions. Which categories perform best, and help manage stock levels through better forecasting.
-,
+This project aims to help retailers understand what drives product sales, the impact of pricing and promotions, which categories perform best, and help manage stock levels through better forecasting.
+
+## Hypotheses
+
+My intial thoughts, before EDA, was that the different attributes would increase sales such as price, store product position, if a product was on promotion or not, and if there were categories that sold more than others. 
+
+I then used the EDA process to try and find out whether these were true. 
+Looking at sales volume by category and positon in store, showed minimal variances so could draw the conclusion neither of these were drivers of volume. 
+From the correlation heatmap I was able to see that the biggest driver was promotion – you can see a high 0.89 correlation between promotion and sales volume. This was furthered when you look at the sales volume distribution visual as you can see two peaks which indicate the on promotion versus not on promotion sales. Sales volume by promotion also shows higher sales volumes when products are promoted. 
+Product position in store showed minimal variance however when on promotion I found that it did change.
+
+## Methodology
+
+I followed the data analytics workflow, detailed below:
+
+### Data Collection
+I found my dataset on Kaggle.
+
+### Project Setup
+I used the template given for this project, before consulting AI for help in setting up my project structure. I knew that the layout would be important to the project, and wanted to ensure from the beginning I had a clear structure and folders.
+
+### Data Cleaning
+I worked through cleaning the data using below steps:
+
+•	Inspecting data
+•	Standardising column names
+•	Reviewing duplications, and removing
+•	Outlier detection using the IQR method
+•	Engineered a new feature column, bucketing up sales into low, average, and high
+•	Used OHE to turn categorical columns into numerical for future modelling
+
+### EDA
+After cleaning the data, and saving, I began exploring the data using visuals. In my visualisations file I explored:
+
+•	Correlations
+•	Category trends
+•	Price behaviour
+•	Promotional impact
+
+### Model Selection
+I consulted AI to figure out which model would be best to use with this dataset and creating a tool that could forecast sales volume. 
+
+This resulted in the choice of XGBoost Regressor due to working best with non linear relationships, ability to handle categorical encoding, and has strong performance on retail data.
+
+### Model Evaluation
+To evaluate the success of the model, I used RMSE and R². 
+
+### Dashboard 
+To build my Streamlit dashboard I consulted AI quite heavily for help on setting up as this was an area I didn't feel as confident in. 
+
+AI helped set up the folder structure and helped me write the code of each page.
+
 
 ## Project Structure
 *used copilot to create below project structure tree

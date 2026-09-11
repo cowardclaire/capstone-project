@@ -70,31 +70,6 @@ if filtered_df.empty:
 st.subheader("📊 How Category & Product Position Behave at This Promotion Level")
 
 # -----------------------------
-# SALES VOLUME BY CATEGORY
-# -----------------------------
-
-st.markdown("### Sales Volume by Category")
-
-fig, ax = plt.subplots(figsize=(10, 5))
-sns.barplot(data=filtered_df, x="terms", y="sales_volume", ax=ax)
-plt.xticks(rotation=45)
-ax.set_xlabel("Category")
-ax.set_ylabel("Sales Volume")
-st.pyplot(fig)
-
-# -----------------------------
-# SALES VOLUME BY PRODUCT POSITION
-# -----------------------------
-
-st.markdown("### Sales Volume by Product Position")
-
-fig, ax = plt.subplots(figsize=(10, 5))
-sns.barplot(data=filtered_df, x="product_position", y="sales_volume", ax=ax)
-ax.set_xlabel("Product Position")
-ax.set_ylabel("Sales Volume")
-st.pyplot(fig)
-
-# -----------------------------
 # PRICE VS SALES VOLUME
 # -----------------------------
 
@@ -120,3 +95,29 @@ plt.xticks(rotation=45)
 ax.set_xlabel("Category")
 ax.set_ylabel("Price (£)")
 st.pyplot(fig)
+
+# -----------------------------
+# SALES VOLUME BY CATEGORY
+# -----------------------------
+
+st.markdown("### Sales Volume by Category")
+
+fig, ax = plt.subplots(figsize=(10, 5))
+sns.barplot(data=filtered_df, x="terms", y="sales_volume", ax=ax)
+plt.xticks(rotation=45)
+ax.set_xlabel("Category")
+ax.set_ylabel("Sales Volume")
+st.pyplot(fig)
+
+# -----------------------------
+# SALES VOLUME BY PRODUCT POSITION
+# -----------------------------
+
+st.markdown("### Sales Volume by Product Position")
+
+fig, ax = plt.subplots(figsize=(10, 5))
+sns.barplot(data=filtered_df, x="product_position", y="sales_volume", ax=ax)
+ax.set_xlabel("Product Position")
+ax.set_ylabel("Sales Volume")
+st.pyplot(fig)
+
