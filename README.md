@@ -66,8 +66,12 @@ To build my Streamlit dashboard I consulted AI quite heavily for help on setting
 
 AI helped set up the folder structure and helped me write the code of each page.
 
+## Data Management
+As discussed previously, I consulted AI to help me ensure I set up my project structure in the most effective way. 
 
-## Project Structure
+Project structure below:
+
+### Project Structure
 *used copilot to create below project structure tree
 
 capstone-project/
@@ -127,6 +131,17 @@ After creating the model, I consulted AI to help me with saving the model so tha
 •	Categories sell averagely similar volumes
 •	Position in store didn't impact volumes until on promotion
 •	The model predicts sales volume with strong accuracy
+
+## Ethical Considerations, Privacy & Governance
+
+### Ethical Considerations
+The dataset used in this project is at product level detail and has no personal information. There are ethical considerations still to apply such as considering bias in the predictive model. The model created was intended to help support decision making not replace human decisions. 
+
+### Data Privacy
+The dataset does not include any customer information or personal data which aligns with GDPR principles. Data is stored in a clear project structure with clear separation between raw and clean data.
+
+### Data Governance
+I have saved all data(raw, cleaned, and model files) in dedicated folders to ensure clear data lineage. Version control(commiting to Github) has been done throughout to track changes to code and data processing steps. The trained model is saved as a pkl file after consulting AI so it can be reused and easily accessed. 
 
 ## Conclusion
 
