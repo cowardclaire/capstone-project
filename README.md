@@ -143,6 +143,33 @@ The dataset does not include any customer information or personal data which ali
 ### Data Governance
 I have saved all data(raw, cleaned, and model files) in dedicated folders to ensure clear data lineage. Version control(commiting to Github) has been done throughout to track changes to code and data processing steps. The trained model is saved as a pkl file after consulting AI so it can be reused and easily accessed. 
 
+## Limitations & Alternative Approaches
+
+### Limitations
+In terms of limitations to this project below are a few to be considered:
+
+No time component - the data doesn't reference any sort of time component such as day of week, time of day etc.
+No store level info - if this was to be used for a multi store retailer, this model is not built to manage more than one store
+Limited product categories - ony a couple in this dataset, again meaning if a bigger retailer with multiple product categories, the model may struggle
+
+### Alternative Approaches
+Other models I  could have used listed below:
+
+Time series forecasting - a model that could predict daily, weekly, weekend trends to better understand seasonal patterns, holiday spikes and differences in behaviour during the week versus at the weekend.
+
+Price elasticity - a model that investigates how sensitive sales volume is to price. It could analyse how much demand drops or increases based on price.
+
+Multi store modelling - this could look at predicting how much a store could sell, not just a product. It would need further detail such as store size, average customers, and average spend but could have been an interesting project.
+
+### Alternative Models
+When I consulted AI to help me understand which model was best for my project, it had also considered Random Forest and LightGBM.
+
+#### Random Forest vs XGBoost
+Random Forest was described as great for simpler, tabular data, reducing overfitting and can delvier quick baselines. However versus XGBoost it struggles with more complex interactions such as price versus promotion and that it doesn't learn sequallentially. XGBoost builds upon each tree so correcting mistakes as it goes and is strong at capturing promotional uplift more accurately.
+
+#### LightGBM vs XGBoost
+LightGBM was described as great for huge datasets and that it uses leaf growth methods. In terms of weaknesses it is known to overfit, require mores tuning and can struggle with OHE features. Whereas XGBoost is more stable, predictable and easier to tune and also that my dataset wasn't big enough for LightGBM.
+
 ## Conclusion
 
 Overall this project has looked at retail sale volume, finding out what really drives performance. I explored the different product attributes, and found that price was the biggest driver, shown through the biggest correlation between sales volume and promotion. After exploring the dataset through visuals, I created a model that would forecast sales based on attributes such as if on promotion, what category the product fell into, store position and price. Then I created a simple Streamlit dashboard that allowed users to toggle between these features before forecasting the units they would sell. 
