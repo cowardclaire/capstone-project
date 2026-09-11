@@ -1,44 +1,122 @@
 import streamlit as st
 import pandas as pd
-import joblib
-from pathlib import Path
+import numpy as np
+import pickle
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-ROOT_DIR = Path(__file__).resolve().parents[2]
+# -----------------------------
+# LOAD MODEL + DATA
+# -----------------------------
 
-st.title("Sales Volume Prediction")
+model = pickle.load(open("data/model/xgboost_model.pkl", "rb"))
+df = pd.read_csv("data/cleaned-data/cleaned_data.csv")
 
-# Load trained model
-model = joblib.load(ROOT_DIR / "data" / "model" / "xgboost_model.pkl")
+st.title("🤖 Sales Volume Prediction")
 
-st.write("Use the inputs below to see the predicted sales volume.")
+st.write(
+    "Adjust the inputs below to generate a prediction and explore how price and promotion "
+    "influence category and shelf position behaviour."
+)
 
-# User inputs
-price = st.slider("Price (£)", 1, 150, 30)
+# -----------------------------
+# USER INPUTS
+# -----------------------------
+
+price = st.number_input("Price (£)", min_value=0.0, max_value=200.0, value=10.0)
+
 promotion = st.selectbox("Promotion", ["Yes", "No"])
 promotion_binary = 1 if promotion == "Yes" else 0
-position = st.selectbox("Product Position", ["Aisle", "End-cap", "Front of Store"])
-category = st.selectbox("Product Category", ["T-Shirts", "Shoes", "Jeans", "Jackets", "Sweaters"])
 
-# Build input dataframe
+# -----------------------------
+# PREDICTION INPUT (FULL FEATURE SET)
+# -----------------------------
+
 input_df = pd.DataFrame({
-    "price": [price],
+    "product_id": [0],  # neutral placeholder
     "promotion": [promotion_binary],
-    "store_position": [position],
-    "product_category": [category]
+    "seasonal": [0],  # default non-seasonal
+    "price": [price],
+    "product_position_Aisle": [1],  # default position
+    "product_position_End-cap": [0],
+    "product_position_Front of Store": [0],
 })
 
-# One-hot encode category
-input_df = pd.get_dummies(input_df, drop_first=True)
+# -----------------------------
+# RUN PREDICTION
+# -----------------------------
 
-# Ensure all expected columns exist
-expected_cols = model.feature_names_in_
-for col in expected_cols:
-    if col not in input_df.columns:
-        input_df[col] = 0
-
-input_df = input_df[expected_cols]
-
-# Predict
 prediction = model.predict(input_df)[0]
 
-st.metric("Predicted Sales Volume", f"{prediction:.0f} units")
+st.subheader("📈 Predicted Sales Volume")
+st.metric(label="Prediction", value=f"{prediction:.0f} units")
+
+st.divider()
+
+# -----------------------------
+# FILTER DATA FOR VISUALS
+# -----------------------------
+
+filtered_df = df[df["promotion"] == promotion_binary]
+
+# Fallback if no rows match
+if filtered_df.empty:
+    st.warning(
+        "No historical data available for this promotion selection. "
+        "Showing full dataset instead."
+    )
+    filtered_df = df.copy()
+
+st.subheader("📊 How Category & Product Position Behave at This Promotion Level")
+
+# -----------------------------
+# SALES VOLUME BY CATEGORY
+# -----------------------------
+
+st.markdown("### Sales Volume by Category")
+
+fig, ax = plt.subplots(figsize=(10, 5))
+sns.barplot(data=filtered_df, x="terms", y="sales_volume", ax=ax)
+plt.xticks(rotation=45)
+ax.set_xlabel("Category")
+ax.set_ylabel("Sales Volume")
+st.pyplot(fig)
+
+# -----------------------------
+# SALES VOLUME BY PRODUCT POSITION
+# -----------------------------
+
+st.markdown("### Sales Volume by Product Position")
+
+fig, ax = plt.subplots(figsize=(10, 5))
+sns.barplot(data=filtered_df, x="product_position", y="sales_volume", ax=ax)
+ax.set_xlabel("Product Position")
+ax.set_ylabel("Sales Volume")
+st.pyplot(fig)
+
+# -----------------------------
+# PRICE VS SALES VOLUME
+# -----------------------------
+
+st.markdown("### Price vs Sales Volume (Promotion Filter Applied)")
+
+fig, ax = plt.subplots(figsize=(10, 5))
+sns.scatterplot(data=filtered_df, x="price", y="sales_volume", ax=ax)
+ax.axvline(price, color="red", linestyle="--", label="Selected Price")
+ax.set_xlabel("Price (£)")
+ax.set_ylabel("Sales Volume")
+ax.legend()
+st.pyplot(fig)
+
+# -----------------------------
+# PRICE DISTRIBUTION BY CATEGORY
+# -----------------------------
+
+st.markdown("### Price Distribution by Category")
+
+fig, ax = plt.subplots(figsize=(10, 5))
+sns.boxplot(data=filtered_df, x="terms", y="price", ax=ax)
+plt.xticks(rotation=45)
+ax.set_xlabel("Category")
+ax.set_ylabel("Price (£)")
+st.pyplot(fig)
