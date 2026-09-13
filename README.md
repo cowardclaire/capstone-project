@@ -12,6 +12,9 @@ The dashboard allows users to:
 •	Review insights and recommendations
 •	Predict sales volume using the model
 
+## Project Purpose
+This project was meant to help retailers understand what drives sales volume and to build a tool that helps forecast sales units. The purpose was to provide a data driven dashbboard that would support decision making on pricing, promotion, and stock planning. 
+
 ## Business Model
 
 This project aims to help retailers understand what drives product sales, the impact of pricing and promotions, which categories perform best, and help manage stock levels through better forecasting.
@@ -166,7 +169,7 @@ No store level info - if this was to be used for a multi store retailer, this mo
 Limited product categories - ony a couple in this dataset, again meaning if a bigger retailer with multiple product categories, the model may struggle
 
 ### Alternative Approaches
-Other models I  could have used listed below:
+Other approaches I  could have used listed below:
 
 ```text
 Time series forecasting - a model that could predict daily, weekly, weekend trends to better understand seasonal patterns, holiday spikes and differences in behaviour during the week versus at the weekend.
