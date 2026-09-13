@@ -40,38 +40,31 @@ def train_models(df):
         raise ValueError(f"Required target column '{target_col}' was not found.")
 
     # ------------------------------------------------------------
-    # 1. Remove text/object columns (XGBoost cannot use them)
+    # 1. Data Preprocessing
     # ------------------------------------------------------------
-    text_cols = df.select_dtypes(include=['object', 'string']).columns.tolist()
-    df = df.drop(columns=text_cols)
+    df = df[["price", "promotion", target_col]]
+
+    # Ensure promotion is numeric
+    if df["promotion"].dtype == "object":
+        df["promotion"] = df["promotion"].map({"Yes": 1, "No": 0})
 
     # ------------------------------------------------------------
-    # 2. Encode remaining categorical columns
+    # 2. Define features and target
     # ------------------------------------------------------------
-    categorical_cols = []
-
-    if 'product_category' in df.columns:
-        categorical_cols.append('product_category')
-
-    df = pd.get_dummies(df, columns=categorical_cols, drop_first=True)
-
-    # ------------------------------------------------------------
-    # 3. Define features and target
-    # ------------------------------------------------------------
-    feature_cols = [col for col in df.columns if col != target_col]
-
-    X = df[feature_cols]
+    X = df[["price", "promotion"]]
     y = df[target_col]
 
+    feature_cols = ["price", "promotion"]
+
     # ------------------------------------------------------------
-    # 4. Train/test split
+    # 3. Train/test split
     # ------------------------------------------------------------
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42
     )
 
     # ------------------------------------------------------------
-    # 5. Train XGBoost model
+    # 4. Train XGBoost model
     # ------------------------------------------------------------
     model = XGBRegressor(
         n_estimators=300,
@@ -86,7 +79,7 @@ def train_models(df):
     model.fit(X_train, y_train)
 
     # ------------------------------------------------------------
-    # 6. Evaluation
+    # 5. Evaluation
     # ------------------------------------------------------------
     y_pred = model.predict(X_test)
 
@@ -101,7 +94,7 @@ def train_models(df):
     print(f"R²:   {r2:.3f}")
 
     # ------------------------------------------------------------
-    # 7. Save metrics
+    # 6. Save metrics
     # ------------------------------------------------------------
     metrics = pd.DataFrame({
         "RMSE": [rmse],
@@ -114,7 +107,7 @@ def train_models(df):
     metrics.to_csv(os.path.join(metrics_path, "xgboost_metrics.csv"), index=False)
 
     # ------------------------------------------------------------
-    # 8. Feature importance plot
+    # 7. Feature importance plot
     # ------------------------------------------------------------
     importance = model.feature_importances_
     importance_df = pd.DataFrame({
@@ -124,7 +117,7 @@ def train_models(df):
 
     plt.figure(figsize=(10, 6))
     sns.barplot(
-        data=importance_df.head(15),
+        data=importance_df,
         x='importance',
         y='feature',
         hue='feature',
@@ -137,26 +130,7 @@ def train_models(df):
     save_plot(plt.gcf(), "xgboost_feature_importance.png")
 
     # ------------------------------------------------------------
-    # 9. Feature importance without promotion
-    # ------------------------------------------------------------
-    importance_df_no_promo = importance_df[importance_df['feature'] != 'promotion']
-
-    plt.figure(figsize=(10, 6))
-    sns.barplot(
-        data=importance_df_no_promo,
-        x='importance',
-        y='feature',
-        hue='feature',
-        legend=False,
-        palette='viridis'
-    )
-    plt.title("Feature Importances (Excluding Promotion)")
-    plt.tight_layout()
-
-    save_plot(plt.gcf(), "feature_importance_no_promo.png")
-
-    # ------------------------------------------------------------
-    # 10. Predicted vs Actual
+    # 8. Predicted vs Actual
     # ------------------------------------------------------------
     plt.figure(figsize=(8, 6))
     plt.scatter(y_test, y_pred, alpha=0.5)
@@ -169,7 +143,7 @@ def train_models(df):
     save_plot(plt.gcf(), "predicted_vs_actual.png")
 
     # ------------------------------------------------------------
-    # 11. Residuals plot
+    # 9. Residuals plot
     # ------------------------------------------------------------
     residuals = y_test - y_pred
 
@@ -184,7 +158,7 @@ def train_models(df):
     save_plot(plt.gcf(), "residuals_plot.png")
 
     # ------------------------------------------------------------
-    # 12. Save trained model
+    # 10. Save trained model
     # ------------------------------------------------------------
     model_path = os.path.join(os.path.dirname(__file__), "..", "data", "model")
     os.makedirs(model_path, exist_ok=True)

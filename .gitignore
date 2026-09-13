@@ -1,0 +1,21 @@
+# Python cache and local envs
+core.Microsoft*
+core.mongo*
+core.python*
+env.py
+__pycache__/
+*.py[cod]
+node_modules/
+.github/
+cloudinary_python.txt
+kaggle.json
+.venv/
+venv/
+env/
+
+# VS Code / editor settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

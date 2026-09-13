@@ -23,7 +23,7 @@ st.write(
 # USER INPUTS
 # -----------------------------
 
-price = st.number_input("Price (£)", min_value=0.0, max_value=200.0, value=10.0)
+price = st.number_input("Price (£)", min_value=1.0, max_value=150.0, value=10.0)
 
 promotion = st.selectbox("Promotion", ["Yes", "No"])
 promotion_binary = 1 if promotion == "Yes" else 0
@@ -32,15 +32,10 @@ promotion_binary = 1 if promotion == "Yes" else 0
 # PREDICTION INPUT (FULL FEATURE SET)
 # -----------------------------
 
-input_df = pd.DataFrame({
-    "product_id": [0],  # neutral placeholder
-    "promotion": [promotion_binary],
-    "seasonal": [0],  # default non-seasonal
-    "price": [price],
-    "product_position_Aisle": [1],  # default position
-    "product_position_End-cap": [0],
-    "product_position_Front of Store": [0],
-})
+input_df = pd.DataFrame([{
+    "price": price,
+    "promotion": promotion_binary
+}])
 
 # -----------------------------
 # RUN PREDICTION
