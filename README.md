@@ -143,7 +143,7 @@ The dataset does not include any customer information or personal data which ali
 ### Data Governance
 I have saved all data(raw, cleaned, and model files) in dedicated folders to ensure clear data lineage. Version control(commiting to Github) has been done throughout to track changes to code and data processing steps. The trained model is saved as a pkl file after consulting AI so it can be reused and easily accessed. 
 
-## Limitations & Alternative Approaches
+## Limitations, Alternative Approaches & Models
 
 ### Limitations
 In terms of limitations to this project below are a few to be considered:
@@ -169,6 +169,9 @@ Random Forest was described as great for simpler, tabular data, reducing overfit
 
 #### LightGBM vs XGBoost
 LightGBM was described as great for huge datasets and that it uses leaf growth methods. In terms of weaknesses it is known to overfit, require mores tuning and can struggle with OHE features. Whereas XGBoost is more stable, predictable and easier to tune and also that my dataset wasn't big enough for LightGBM.
+
+## Future Improvements
+Looking ahead, this project could continue to grow by adding seasonality and holiday effects such as Christmas, Black Friday, Easter etc. Whilst we can currently forecast sales volume, and seeing how much promotion drives this, the next logical step would be to add in margins. To further delve into profitability, it would be useful to have what each products margins are so we could create a model that suggests what depth of promotion would drive more sales volume whilst protecting profitability.
 
 ## Conclusion
 
