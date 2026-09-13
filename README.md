@@ -8,9 +8,11 @@ I analysed retail product performance by looking at pricing behaviour, promotion
 
 The dashboard allows users to:
 
+```text
 • Understand the correlations between product pricing, category trends, and promotional activity on sales volume
 • Review insights and recommendations
 • Predict sales volume using the model
+```
 
 ## Project Purpose
 This project was meant to help retailers understand what drives sales volume and to build a tool that helps forecast sales units. The purpose was to provide a data-driven dashboard that would support decision-making on pricing, promotion, and stock planning.
@@ -169,9 +171,11 @@ I have saved all data (raw, cleaned, and model files) in dedicated folders to en
 ### Limitations
 In terms of limitations to this project, a few are worth considering:
 
+```text
 • No time component — the data doesn’t reference any sort of time component such as day of week or time of day
 • No store-level information — if this were to be used for a multi-store retailer, this model is not built to manage more than one store
 • Limited product categories — only a couple are in this dataset, again meaning that if a bigger retailer with multiple product categories were involved, the model may struggle
+```
 
 ### Alternative Approaches
 Other approaches I could have used are listed below:
