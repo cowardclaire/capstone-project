@@ -29,39 +29,43 @@ Product position in store showed minimal variance however when on promotion I fo
 
 I followed the data analytics workflow, detailed below:
 
-### Data Collection
+#### Data Collection
 I found my dataset on Kaggle.
 
-### Project Setup
+#### Project Setup
 I used the template given for this project, before consulting AI for help in setting up my project structure. I knew that the layout would be important to the project, and wanted to ensure from the beginning I had a clear structure and folders.
 
-### Data Cleaning
+#### Data Cleaning
 I worked through cleaning the data using below steps:
 
+```text
 •	Inspecting data
 •	Standardising column names
 •	Reviewing duplications, and removing
 •	Outlier detection using the IQR method
 •	Engineered a new feature column, bucketing up sales into low, average, and high
 •	Used OHE to turn categorical columns into numerical for future modelling
+```
 
-### EDA
+#### EDA
 After cleaning the data, and saving, I began exploring the data using visuals. In my visualisations file I explored:
 
+```text
 •	Correlations
 •	Category trends
 •	Price behaviour
 •	Promotional impact
+```
 
-### Model Selection
+#### Model Selection
 I consulted AI to figure out which model would be best to use with this dataset and creating a tool that could forecast sales volume. 
 
 This resulted in the choice of XGBoost Regressor due to working best with non linear relationships, ability to handle categorical encoding, and has strong performance on retail data.
 
-### Model Evaluation
+#### Model Evaluation
 To evaluate the success of the model, I used RMSE and R². 
 
-### Dashboard 
+#### Dashboard 
 To build my Streamlit dashboard I consulted AI quite heavily for help on setting up as this was an area I didn't feel as confident in. 
 
 AI helped set up the folder structure and helped me write the code of each page.
