@@ -74,6 +74,7 @@ Project structure below:
 ### Project Structure
 *used copilot to create below project structure tree
 
+```text
 capstone-project/
 ├── data/                     # Raw and cleaned datasets
 ├── visuals/                  # EDA charts and plots
