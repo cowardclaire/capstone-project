@@ -173,6 +173,10 @@ LightGBM was described as great for huge datasets and that it uses leaf growth m
 ## Future Improvements
 Looking ahead, this project could continue to grow by adding seasonality and holiday effects such as Christmas, Black Friday, Easter etc. Whilst we can currently forecast sales volume, and seeing how much promotion drives this, the next logical step would be to add in margins. To further delve into profitability, it would be useful to have what each products margins are so we could create a model that suggests what depth of promotion would drive more sales volume whilst protecting profitability.
 
+## Version Control
+I used GitHub for version control, committing once I had made big, meaningful changes. I received feedback from my course tutor that I needed to be committing more often near the beginning. I made these changes and begun committing more often which is why you can see more commits from the middle of capstone project.
+
+
 ## Conclusion
 
 Overall this project has looked at retail sale volume, finding out what really drives performance. I explored the different product attributes, and found that price was the biggest driver, shown through the biggest correlation between sales volume and promotion. After exploring the dataset through visuals, I created a model that would forecast sales based on attributes such as if on promotion, what category the product fell into, store position and price. Then I created a simple Streamlit dashboard that allowed users to toggle between these features before forecasting the units they would sell. 
