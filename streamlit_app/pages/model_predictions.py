@@ -96,18 +96,6 @@ ax.set_xlabel("Category")
 ax.set_ylabel("Price (£)")
 st.pyplot(fig)
 
-# -----------------------------
-# SALES VOLUME BY CATEGORY
-# -----------------------------
-
-st.markdown("### Sales Volume by Category")
-
-fig, ax = plt.subplots(figsize=(10, 5))
-sns.barplot(data=filtered_df, x="terms", y="sales_volume", ax=ax)
-plt.xticks(rotation=45)
-ax.set_xlabel("Category")
-ax.set_ylabel("Sales Volume")
-st.pyplot(fig)
 
 # -----------------------------
 # SALES VOLUME BY PRODUCT POSITION
@@ -121,3 +109,14 @@ ax.set_xlabel("Product Position")
 ax.set_ylabel("Sales Volume")
 st.pyplot(fig)
 
+# -----------------------------
+# SALES VOLUME BY DISTRIBUTION
+# -----------------------------
+
+st.markdown("### Sales Volume Distribution")
+
+fig, ax = plt.subplots(figsize=(10, 5))
+sns.histplot(data=filtered_df, x="sales_volume", bins=20, kde=True, ax=ax)
+ax.set_xlabel("Sales Volume")
+ax.set_ylabel("Frequency")
+st.pyplot(fig)
