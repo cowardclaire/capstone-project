@@ -2,6 +2,9 @@ from pathlib import Path
 
 import streamlit as st
 
+st.set_page_config(page_title="EDA - Retail Sales Analytics", layout="wide")
+
+
 ROOT_DIR = Path(__file__).resolve().parents[2]
 EDA_DIR = ROOT_DIR / "visuals" / "eda"
 
