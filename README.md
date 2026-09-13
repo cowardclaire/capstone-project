@@ -88,6 +88,7 @@ capstone-project/
 │       ├── Model_Predictions.py
 │       └── Insights_and_Recommendations.py
 └── README.md                 # Project documentation
+```
 
 ## How to run the Dashboard
 ### Create and activate the virtual environment (if not already live) :
@@ -99,10 +100,13 @@ pip install -r requirements.txt
 
 ### Run the Streamlit application – 
 First go into the Main Page which is the root of streamlit app:
+
+```text
 capstone-project/
 │
 ├── streamlit_app/            # Dashboard application
 │   ├── Main_Page.py          # Home page
+```
 
 And paste into the terminal – “streamlit run streamlit_app/Main_Page.py”
 
@@ -110,10 +114,12 @@ This will open a browser, taking you to the web page for the Retail Dashboard.
 
 ## Dashboard Pages
 
+```text
 Main Page – introducing the dashboard
 EDA – shows my key visuals 
 Insights & Predictions – explains my findings of which attributes have the biggest impact on sales, and how businesses could use the model to improve their sales and stock position
 Model Predictions – allows users to toggle with pricing, promotion, store position, and product categories before predicting sales volume
+```
 
 ## Model Overview
 
@@ -127,11 +133,13 @@ After creating the model, I consulted AI to help me with saving the model so tha
 
 ## Key Findings
 
+```text
 •	Price has a strong impact on sales volume
 •	Promotions significantly increase demand
 •	Categories sell averagely similar volumes
 •	Position in store didn't impact volumes until on promotion
 •	The model predicts sales volume with strong accuracy
+```
 
 ## Ethical Considerations, Privacy & Governance
 
@@ -156,11 +164,13 @@ Limited product categories - ony a couple in this dataset, again meaning if a bi
 ### Alternative Approaches
 Other models I  could have used listed below:
 
+```text
 Time series forecasting - a model that could predict daily, weekly, weekend trends to better understand seasonal patterns, holiday spikes and differences in behaviour during the week versus at the weekend.
 
 Price elasticity - a model that investigates how sensitive sales volume is to price. It could analyse how much demand drops or increases based on price.
 
 Multi store modelling - this could look at predicting how much a store could sell, not just a product. It would need further detail such as store size, average customers, and average spend but could have been an interesting project.
+```
 
 ### Alternative Models
 When I consulted AI to help me understand which model was best for my project, it had also considered Random Forest and LightGBM.
