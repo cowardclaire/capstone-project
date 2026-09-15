@@ -1,11 +1,9 @@
 from pathlib import Path
-
 import streamlit as st
 
-# streamlit_page: "EDA"
+st.set_page_config(page_title="Exploratory Data Analysis", page_icon="📊")
 
-
-ROOT_DIR = Path(__file__).resolve().parents[2]
+ROOT_DIR = Path(__file__).resolve().parents[1]
 EDA_DIR = ROOT_DIR / "visuals" / "eda"
 
 st.title("📊 Exploratory Data Analysis")

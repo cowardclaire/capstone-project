@@ -122,7 +122,7 @@ capstone-project/
 Then paste the following into the terminal:
 
 ```bash
-streamlit run streamlit_app/Main_Page.py
+streamlit run streamlit_app/app.py
 ```
 
 This will open a browser and take you to the web page for the Retail Dashboard.
